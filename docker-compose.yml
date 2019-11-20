@@ -8,6 +8,10 @@
 
 version: '3.4'
 
+volumes:
+  postgres-data:
+  sentry-data:
+
 x-defaults: &defaults
   restart: unless-stopped
   build:
@@ -45,7 +49,7 @@ services:
       POSTGRES_USER: ${SENTRY_DB_USER}
       POSTGRES_PASSWORD: ${SENTRY_DB_PASSWORD}
     volumes:
-      - sentry-postgres:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
   web:
     <<: *defaults
@@ -59,10 +63,3 @@ services:
   worker:
     <<: *defaults
     command: run worker
-
-
-volumes:
-    sentry-data:
-      external: true
-    sentry-postgres:
-      external: true
