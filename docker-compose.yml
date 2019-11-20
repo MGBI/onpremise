@@ -14,15 +14,11 @@ volumes:
 
 x-defaults: &defaults
   restart: unless-stopped
-  build:
-    context: .
-    args:
-      SENTRY_IMAGE: ${SENTRY_IMAGE}
+  image: ${PUBLIC_REPOSITORY}/${SENTRY_IMAGE}
   depends_on:
     - redis
     - postgres
     - memcached
-    - smtp
   env_file: .env
   environment:
     SENTRY_MEMCACHED_HOST: memcached
