@@ -6,7 +6,7 @@
 # See docs.getsentry.com/on-premise/server/ for full
 # instructions
 
-version: '3.4'
+version: '2'
 
 volumes:
   postgres-data:
