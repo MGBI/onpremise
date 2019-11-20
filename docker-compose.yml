@@ -24,16 +24,11 @@ x-defaults: &defaults
     SENTRY_MEMCACHED_HOST: memcached
     SENTRY_REDIS_HOST: redis
     SENTRY_POSTGRES_HOST: postgres
-    SENTRY_EMAIL_HOST: smtp
   volumes:
     - sentry-data:/var/lib/sentry/files
 
 
 services:
-  smtp:
-    restart: unless-stopped
-    image: tianon/exim4
-
   memcached:
     restart: unless-stopped
     image: memcached:1.5-alpine
