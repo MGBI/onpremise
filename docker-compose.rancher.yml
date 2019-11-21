@@ -1,0 +1,119 @@
+# This file merged with docker-compose.yml creates a production-like
+# configuration for deploying the Rancher stack.
+# Remember to start Rancher Secrets from Catalog before the deployment!
+version: '2'
+
+volumes:
+  logs:
+
+secrets:
+  sentry-secret-key:
+    file: secrets/sentry-secret-key.txt
+  sentry-email-password:
+    file: secrets/sentry-email-password.txt
+  sentry-db-password:
+    file: secrets/sentry-db-password.txt
+  github-api-secret:
+    file: secrets/github-api-secret.txt
+
+services:
+  lb:
+    image: rancher/lb-service-haproxy
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      # Put load balancer containers on hosts with label sentry=true
+      io.rancher.scheduler.affinity:host_label: sentry=true
+      # Allow to interact with the Rancher API
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: environmentAdmin
+
+  letsencrypt:
+    image: janeczku/rancher-letsencrypt:v0.5.0
+    environment:
+      API_VERSION: Production
+      CERT_NAME: ${DOMAIN}
+      DNS_RESOLVERS: 8.8.8.8:53,8.8.4.4:53
+      DOMAINS: ${DOMAIN}
+      EMAIL: ${ADMIN_EMAIL}
+      EULA: 'Yes'
+      PROVIDER: HTTP
+      PUBLIC_KEY_TYPE: RSA-2048
+      RENEWAL_PERIOD_DAYS: '20'
+      RENEWAL_TIME: '3'
+      RUN_ONCE: 'false'
+    volumes:
+    - /var/lib/rancher:/var/lib/rancher
+    labels:
+      # Put let's encrypt containers on hosts with label sentry=true
+      io.rancher.scheduler.affinity:host_label: sentry=true
+      io.rancher.container.agent.role: environment
+      io.rancher.container.create_agent: 'true'
+
+  web:
+    secrets:
+      - sentry-secret-key
+      - sentry-email-password
+      - sentry-db-password
+      - github-api-secret
+    environment:
+      SENTRY_SECRET_KEY_FILE: /run/secrets/sentry-secret-key
+      SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
+      SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
+      GITHUB_API_SECRET: /run/secrets/github-api-secret
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
+
+  worker:
+    secrets:
+      - sentry-secret-key
+      - sentry-email-password
+      - sentry-db-password
+      - github-api-secret
+    environment:
+      SENTRY_SECRET_KEY_FILE: /run/secrets/sentry-secret-key
+      SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
+      SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
+      GITHUB_API_SECRET: /run/secrets/github-api-secret
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
+
+  cron:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
+
+  postgres:
+    secrets:
+      - sentry-db-password
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/sentry-db-password
+      POSTGRES_MAIN_PASSWORD_FILE: /run/secrets/postgres-main-password
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
+
+  memcached:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
+
+  redis:
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:host_label: sentry=true
+    restart: on-failure
