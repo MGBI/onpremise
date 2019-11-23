@@ -19,7 +19,6 @@ x-defaults: &defaults
     - redis
     - postgres
     - memcached
-  env_file: .env
   environment:
     SENTRY_MEMCACHED_HOST: memcached
     SENTRY_REDIS_HOST: redis

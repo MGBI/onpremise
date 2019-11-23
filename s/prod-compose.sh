@@ -28,6 +28,7 @@ enable_https () {
 }
 
 cleanup () {
+	rm -f .env.rancher
 	rm -rf secrets
 	enable_https
 	restore_sentry
@@ -42,6 +43,10 @@ test $SENTRY_SECRET_KEY
 test $SENTRY_EMAIL_PASSWORD
 test $SENTRY_DB_PASSWORD
 test $GITHUB_API_SECRET
+
+# remove secrets from shared variables (used in development environment)
+sed -e '/^SENTRY_SECRET_KEY/d' -e '/^SENTRY_EMAIL_PASSWORD/d' \
+ -e '/^SENTRY_DB_PASSWORD/d' -e '/^GITHUB_API_SECRET/d' $ENV_FILE > .env.rancher
 
 # the contents of the specified files will be used to create the secrets
 # before creating the stack and starting the services
