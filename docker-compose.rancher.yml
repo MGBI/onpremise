@@ -30,7 +30,7 @@ services:
       io.rancher.container.agent.role: environmentAdmin
 
   letsencrypt:
-    image: janeczku/rancher-letsencrypt:v0.5.0
+    image: mgbi/rancher-letsencrypt:v1.0.0
     environment:
       API_VERSION: Production
       CERT_NAME: ${DOMAIN}
