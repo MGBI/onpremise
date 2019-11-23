@@ -4,3 +4,7 @@ services:
   web:
     ports:
       - '9000:9000'
+
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ${SENTRY_DB_PASSWORD}

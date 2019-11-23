@@ -62,6 +62,11 @@ services:
       SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
       SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
       GITHUB_API_SECRET: /run/secrets/github-api-secret
+      # clear variables from .env file
+      SENTRY_SECRET_KEY:
+      SENTRY_EMAIL_PASSWORD:
+      SENTRY_DB_PASSWORD:
+      GITHUB_API_SECRET:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
@@ -79,6 +84,11 @@ services:
       SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
       SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
       GITHUB_API_SECRET: /run/secrets/github-api-secret
+      # clear variables from .env file
+      SENTRY_SECRET_KEY:
+      SENTRY_EMAIL_PASSWORD:
+      SENTRY_DB_PASSWORD:
+      GITHUB_API_SECRET:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
@@ -97,7 +107,6 @@ services:
       - sentry-db-password
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/sentry-db-password
-      POSTGRES_MAIN_PASSWORD_FILE: /run/secrets/postgres-main-password
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
