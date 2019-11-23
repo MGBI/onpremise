@@ -1,3 +1,5 @@
+.env
+.env.example
 .git
 .gitignore
 .dockerignore
@@ -5,8 +7,15 @@ Makefile
 README.md
 *.pyc
 *.tar
+Dockerfile
 docker-compose.yml
+docker-compose.override.yml
+docker-compose.rancher.yml
+rancher-compose.yml
 data/
 .travis.yml
 install.sh
 test.sh
+load_rancher_env.sh
+load_rancher_env_template.sh
+s/

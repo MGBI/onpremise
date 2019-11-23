@@ -1,3 +1,6 @@
+Forked from:
+https://github.com/getsentry/onpremise/tree/stable
+
 # Sentry On-Premise [![Build Status][build-status-image]][build-status-url]
 
 Official bootstrap for running your own [Sentry](https://sentry.io/) with [Docker](https://www.docker.com/).
@@ -41,6 +44,48 @@ docker-compose build --pull # Build the services again after updating, and make 
 docker-compose run --rm web upgrade # Run new migrations
 docker-compose up -d # Recreate the services
 ```
+
+## Extra
+
+### Setup Sentry Rancher stack
+
+Do not run `./install.sh`.
+
+0. Build and push an image to your repository. You can also use our public image:
+`mgbi/sentry:9.1.2`.
+```
+./s/build_and_push_docker_images.sh
+```
+1. Set environment variables. List of supported variables is in `sentry.conf.py`.
+Rancher secrets are marked with `*Rancher secret*` annotation.
+```
+cp .env.example .env
+vim .env
+```
+2. Set Rancher API credentials.
+```
+cp load_rancher_env_template.sh load_rancher_env.sh
+vim load_rancher_env.sh
+```
+3. Generate secret key.
+```
+./s/generate-secret-key.sh
+```
+4. Deploy the first time without https and with sentry sleeping.
+```
+./s/prod-compose.sh
+```
+5. Check in Rancher UI whether letsencrypt got your certificate.
+6. Upgrade web container.
+```
+source load_rancher_env.sh
+rancher exec -it sentry/web /entrypoint.sh upgrade
+```
+7. Deploy second time with https and sentry running.
+```
+./s/prod-compose.sh
+```
+
 
 ## Resources
 

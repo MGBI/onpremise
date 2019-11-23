@@ -66,10 +66,13 @@ target/
 .python-version
 
 # https://docs.docker.com/compose/extends/
-docker-compose.override.yml
+# docker-compose.override.yml
 
 # env config
 .env
+
+# Rancher config
+load_rancher_env.sh
 
 *.tar
 data/
