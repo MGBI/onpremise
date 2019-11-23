@@ -1,9 +1,17 @@
-Forked from:
+**Forked from:**
 https://github.com/getsentry/onpremise/tree/stable
 
-# Sentry On-Premise [![Build Status][build-status-image]][build-status-url]
+Sentry Rancher stack deployment added with Let's Encrypt support.
 
-Official bootstrap for running your own [Sentry](https://sentry.io/) with [Docker](https://www.docker.com/).
+# Sentry On-Premise with Rancher 1.6 support
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/mgbi/onpremise.svg?maxAge=8600)][hub]
+[![License](https://img.shields.io/github/license/mgbi/onpremise.svg?maxAge=8600)]()
+
+[hub]: https://hub.docker.com/r/mgbi/onpremise/
+
+Official bootstrap for running your own [Sentry](https://sentry.io/) with [Docker](https://www.docker.com/)
+on [Rancher v1.6](https://rancher.com/docs/rancher/v1.6/en/).
 
 ## Requirements
 
@@ -71,17 +79,18 @@ vim load_rancher_env.sh
 ```
 ./s/generate-secret-key.sh
 ```
-4. Deploy the first time without https and with sentry sleeping.
+4. Launch Rancher Secrets from the Rancher Catalog.
+5. Deploy the first time without https and with sentry sleeping.
 ```
 ./s/prod-compose.sh
 ```
-5. Check in Rancher UI whether letsencrypt got your certificate.
-6. Upgrade web container.
+6. Check in Rancher UI whether letsencrypt got your certificate.
+7. Upgrade web container.
 ```
 source load_rancher_env.sh
 rancher exec -it sentry/web /entrypoint.sh upgrade
 ```
-7. Deploy second time with https and sentry running.
+8. Deploy second time with https and sentry running.
 ```
 ./s/prod-compose.sh
 ```
