@@ -1,4 +1,4 @@
-ARG SENTRY_IMAGE
+ARG SENTRY_IMAGE=sentry:9.1.2
 FROM ${SENTRY_IMAGE}-onbuild
 
 # Script for loading sensitive data (secrets)
