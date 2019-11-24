@@ -88,7 +88,11 @@ services:
     restart: on-failure
 
   cron:
+    secrets:
+      - sentry-secret-key
     env_file: .env.rancher
+    environment:
+      SENTRY_SECRET_KEY_FILE: /run/secrets/sentry-secret-key
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
