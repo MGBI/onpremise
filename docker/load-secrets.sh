@@ -22,6 +22,8 @@ fi
 
 for var_name in "${vars_names[@]}"
 do
-	echo "Loading $var_name secret..."
-	file_env "$var_name"
+	if [ -n "$var_name" ]; then
+		echo "Loading $var_name secret..."
+		file_env "$var_name"
+	fi
 done

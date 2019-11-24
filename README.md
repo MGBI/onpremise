@@ -85,7 +85,7 @@ vim load_rancher_env.sh
 ./s/prod-compose.sh
 ```
 6. Check in Rancher UI whether letsencrypt got your certificate.
-7. Upgrade web container.
+7. Run upgrade command in the web container.
 ```
 source load_rancher_env.sh
 rancher exec -it sentry/web /entrypoint.sh upgrade
