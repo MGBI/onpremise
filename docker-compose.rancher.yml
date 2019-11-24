@@ -62,7 +62,7 @@ services:
       SENTRY_SECRET_KEY_FILE: /run/secrets/sentry-secret-key
       SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
       SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
-      GITHUB_API_SECRET: /run/secrets/github-api-secret
+      GITHUB_API_SECRET_FILE: /run/secrets/github-api-secret
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
@@ -80,7 +80,7 @@ services:
       SENTRY_SECRET_KEY_FILE: /run/secrets/sentry-secret-key
       SENTRY_EMAIL_PASSWORD_FILE: /run/secrets/sentry-email-password
       SENTRY_DB_PASSWORD_FILE: /run/secrets/sentry-db-password
-      GITHUB_API_SECRET: /run/secrets/github-api-secret
+      GITHUB_API_SECRET_FILE: /run/secrets/github-api-secret
     labels:
       io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name

@@ -4,6 +4,11 @@
 
 set -e
 
+if [ "$1" != "sleep" ]; then
+	# load available secret environment variables
+	source load-secrets
+fi
+
 # first check if we're passing flags, if so
 # prepend with sentry
 if [ "${1:0:1}" = '-' ]; then
@@ -23,11 +28,6 @@ if [ "$1" = 'sentry' ]; then
 		find "$SENTRY_FILESTORE_DIR" ! -user sentry -exec chown sentry {} \;
 		set -- gosu sentry "$@"
 	fi
-fi
-
-if [ "$1" != "sleep" ]; then
-	# load available secret environment variables
-	source load-secrets
 fi
 
 exec "$@"
