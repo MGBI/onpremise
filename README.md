@@ -5,10 +5,10 @@ Sentry Rancher stack deployment added with Let's Encrypt support.
 
 # Sentry On-Premise with Rancher 1.6 support
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/mgbi/onpremise.svg?maxAge=8600)][hub]
+[![Docker Pulls](https://img.shields.io/docker/pulls/mgbi/sentry.svg?maxAge=8600)][hub]
 [![License](https://img.shields.io/github/license/mgbi/onpremise.svg?maxAge=8600)]()
 
-[hub]: https://hub.docker.com/r/mgbi/onpremise/
+[hub]: https://hub.docker.com/r/mgbi/sentry/
 
 Official bootstrap for running your own [Sentry](https://sentry.io/) with [Docker](https://www.docker.com/)
 on [Rancher v1.6](https://rancher.com/docs/rancher/v1.6/en/).
