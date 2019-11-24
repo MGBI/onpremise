@@ -6,7 +6,7 @@ set -e
 
 if [ "$1" != "sleep" ]; then
 	# load available secret environment variables
-	source load-secrets
+	source load-secrets ""
 fi
 
 # first check if we're passing flags, if so
